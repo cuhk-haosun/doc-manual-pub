@@ -1,0 +1,53 @@
+---
+title: "R语言绘图对象输出至HTML文件示例"
+output:
+  html_document: default
+---
+
+>本部分将以前面提到的ggplot2包、ggivs包和plotly包绘图对象为例，演示将这些绘图对象输出为HTML文件的方法。
+
+# **1.ggplot2绘图对象输出**
+
+>本例以mtcars数据集为例，绘制wt变量和mpg变量的散点图并添加散点图趋势线和置信区间。
+
+```{r include=TRUE,echo=FALSE,message=FALSE,warning=FALSE,eval=TRUE,fig.align='center',fig.height=4,fig.width=8}
+library(ggplot2)
+ggplot(mtcars,aes(x = wt,y = mpg))+ 
+  geom_point(colour = "red", fill = "white", shape =21, size = 5) +
+  geom_smooth(colour = "blue", fill = "lightblue") + theme_bw()
+```
+
+# **2.ggvis绘图对象输出**
+
+>本例以mtcars数据集为例，绘制wt变量和mpg变量的散点图并添加散点图趋势线和置信区间。
+
+```{r include=TRUE,echo=FALSE,message=FALSE,warning=FALSE,eval=TRUE,fig.align='center',fig.height=4,fig.width=8}
+library(ggvis)
+mtcars %>% 
+  ggvis(~wt, ~mpg) %>%
+  layer_lines(strokeWidth := 2) %>% 
+  layer_points(fill := "white", stroke := "black",
+               size := 100,shape := "circle") %>%
+  layer_smooths(span = 1,strokeWidth := 5,stroke := "red",se = T)
+```
+
+# **3.plotly绘图对象输出**
+
+>本例以gapminder数据集为例，绘制世界主要国家在1952年至2007年间（每五年）人均GDP、人口数量、预期寿命等民生变量的发展变化动态图形。
+
+```{r include=TRUE,echo=FALSE,message=FALSE,warning=FALSE,eval=TRUE,fig.align='center',fig.height=4,fig.width=8,result="hold"}
+library(plotly)
+library(gapminder)
+gapminder %>%
+  plot_ly(x = ~gdpPercap,y = ~lifeExp,
+          size = ~pop,color = ~continent,
+          frame = ~year, text = ~country, 
+          hoverinfo = "text",type = 'scatter',
+          mode = 'markers') %>%
+  layout(xaxis = list(title = "人均GDP",type = "log"),
+         yaxis = list(title = "预期寿命"))%>%
+  animation_slider(currentvalue = list(prefix = "当前年度 ", 
+                                       font = list(color = "red"))) %>%
+  animation_button(label = "播放") %>% 
+  animation_opts(1000,easing = "elastic", redraw = T)
+```
