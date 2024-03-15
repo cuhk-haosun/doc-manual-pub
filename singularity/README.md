@@ -1,8 +1,4 @@
-# Get images from Docker
-```
-singularity pull XXX.sif docker://path            #It is generally used to obtain a read-only image
-```
-# Build image
+# Build Image
 ```
 /data/home/grp-sunhao/pub/app/singularity build --sandbox /data/home/grp-sunhao/yourname/yourpath docker://cuhkhaosun/base
 ```
@@ -14,7 +10,7 @@ singularity pull XXX.sif docker://path            #It is generally used to obtai
 ```
 cp -r /data/home/grp-sunhao/zx/container/base /data/home/grp-sunhao/yourname/yourpath
 ```
-# run container
+# Run Container
 ```
 /data/home/grp-sunhao/pub/app/singularity shell /data/home/grp-sunhao/yourname/yourpath
 image
