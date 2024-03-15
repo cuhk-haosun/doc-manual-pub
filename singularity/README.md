@@ -6,7 +6,7 @@
 **Note:** pull from docker maybe slow or timeout
 
 
-## If timeout,copy from pub
+## Method for Timeout
 ```
 cp -r /data/home/grp-sunhao/zx/container/base /data/home/grp-sunhao/yourname/yourpath
 ```
