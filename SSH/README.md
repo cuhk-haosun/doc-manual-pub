@@ -24,9 +24,9 @@ For first time login, users could use the following command to login to the syst
 ssh -p [port] [account]@[ip]
 ```
 
-![img](D:\Documents\GitHub\doc-manual-pub\SSH\image\ssh%20powershell.gif)
+<img title="" src="https://github.com/HoshinoKyouna/doc-manual-pub/blob/image-link-repair/SSH/image/ssh%20powershell.gif?raw=true" alt="img" data-align="inline">
 
-![img](D:\Documents\GitHub\doc-manual-pub\SSH\image\ssh%20linux.gif)
+![img](https://github.com/HoshinoKyouna/doc-manual-pub/blob/image-link-repair/SSH/image/ssh%20linux.gif?raw=true)
 
 **Note:** For user privacy, the password is not shown as any symbol but remains blank when typing.
 
@@ -36,9 +36,9 @@ New users are advised to change their passwords via the following order:
 passwd
 ```
 
-![img](D:\Documents\GitHub\doc-manual-pub\SSH\image\passwd%20powershell.gif)
+![img](https://github.com/HoshinoKyouna/doc-manual-pub/blob/image-link-repair/SSH/image/passwd%20powershell.gif?raw=true)
 
-![img](D:\Documents\GitHub\doc-manual-pub\SSH\image\passwd%20linux.gif)
+![img](https://github.com/HoshinoKyouna/doc-manual-pub/blob/image-link-repair/SSH/image/passwd%20linux.gif?raw=true)
 
 End the access:
 
@@ -46,9 +46,9 @@ End the access:
 exit
 ```
 
-![img](D:\Documents\GitHub\doc-manual-pub\SSH\image\exit%20powershell.gif)
+![img](https://github.com/HoshinoKyouna/doc-manual-pub/blob/image-link-repair/SSH/image/exit%20powershell.gif?raw=true)
 
-![img](D:\Documents\GitHub\doc-manual-pub\SSH\image\exit%20linux.gif)
+![img](https://github.com/HoshinoKyouna/doc-manual-pub/blob/image-link-repair/SSH/image/exit%20linux.gif?raw=true)
 
 or
 
@@ -56,9 +56,9 @@ or
 logout
 ```
 
-![img](D:\Documents\GitHub\doc-manual-pub\SSH\image\logout%20powershell.gif)
+![img](https://github.com/HoshinoKyouna/doc-manual-pub/blob/image-link-repair/SSH/image/logout%20powershell.gif?raw=true)
 
-![img](D:\Documents\GitHub\doc-manual-pub\SSH\image\logout%20linux.gif)
+![img](https://github.com/HoshinoKyouna/doc-manual-pub/blob/image-link-repair/SSH/image/logout%20linux.gif?raw=true)
 
 ## SSH key login
 
@@ -83,9 +83,9 @@ The files recording the key pairs will be designated with default names. However
 ssh-keygen -f ~/[file_name] -t ed25519
 ```
 
-![img](D:\Documents\GitHub\doc-manual-pub\SSH\image\ssh-keygen%20powershell.gif)
+![img](https://github.com/HoshinoKyouna/doc-manual-pub/blob/image-link-repair/SSH/image/ssh-keygen%20powershell.gif?raw=true)
 
-![img](D:\Documents\GitHub\doc-manual-pub\SSH\image\ssh-keygen%20linux.gif)
+![img](https://github.com/HoshinoKyouna/doc-manual-pub/blob/image-link-repair/SSH/image/ssh-keygen%20linux.gif?raw=true)
 
 **Note:** The directory and filename were set as default in the demostration, and no passphrase was set.
 
@@ -99,7 +99,7 @@ In Linux console, to copy the Public Key to the Server, users could simply use t
 ssh-copy-id -i ~/.ssh/[file_name].pub -p [port] [account]@[ip]
 ```
 
-![img](D:\Documents\GitHub\doc-manual-pub\SSH\image\copy%20pub%20key%20linux.gif)
+![img](https://github.com/HoshinoKyouna/doc-manual-pub/blob/image-link-repair/SSH/image/copy%20pub%20key%20linux.gif?raw=true)
 
 In Windows PowerShell, users should instead use the commands as follows:
 
@@ -107,15 +107,15 @@ In Windows PowerShell, users should instead use the commands as follows:
 type $env:USERPROFILE\.ssh\[filename].pub | ssh -p [port] [account]@[ip] "cat >> .ssh/authorized_keys"
 ```
 
-![img](D:\Documents\GitHub\doc-manual-pub\SSH\image\copy%20pub%20key%20powershell.gif)
+![img](https://github.com/HoshinoKyouna/doc-manual-pub/blob/image-link-repair/SSH/image/copy%20pub%20key%20powershell.gif?raw=true)
 
 **Note:** Users are advised to type the entire commands in textbook in advance and copy&paste them to the Windows PowerShell by `Ctrl+C` and `Ctrl+V`.
 
 Once the public key has been configured on the server, the server will allow any connecting user that has the private key to log in (following the instruction in the previous section) without typing passwords. During the login process, the client proves possession of the private key by digitally signing the key exchange.
 
-![img](D:\Documents\GitHub\doc-manual-pub\SSH\image\ssh-key%20login%20powershell.gif)
+![img](https://github.com/HoshinoKyouna/doc-manual-pub/blob/image-link-repair/SSH/image/ssh-key%20login%20powershell.gif?raw=true)
 
-![img](D:\Documents\GitHub\doc-manual-pub\SSH\image\ssh-key%20login%20linux.gif)
+![img](https://github.com/HoshinoKyouna/doc-manual-pub/blob/image-link-repair/SSH/image/ssh-key%20login%20linux.gif?raw=true)
 
 ### Extensions for ssh-keygen algorithms:
 
