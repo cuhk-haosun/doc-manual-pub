@@ -2,6 +2,7 @@
 ```
 /usr/sbin/glusterfs --log-level=INFO --log-file=/home/zx/.local/gluster.log --volfile-id=zx  --volfile-server=sunlabfs1 zx
 ```
+user should change every word `zx` to adapt to your situation
 
 # Requirement for non-user mount
 ref: https://www.gluster.org/mounting-a-glusterfs-volume-as-an-unprivileged-user/
