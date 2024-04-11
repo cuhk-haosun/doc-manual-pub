@@ -132,7 +132,7 @@ Here we give an example. You can edit the compose file as showing below.
 **Notice**: In the compose file, you can't use the 'Tab' key.
 
 ```yaml
-version: '3.7'
+
 
 services:
   openldap:
