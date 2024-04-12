@@ -16,7 +16,7 @@
 
 3. Self-signing certificate
    
-   **The common name of the certificate used in this example is `ldap.242c.cc`, the hostname of the docker has to be the same as the certificate. **
+   **The common name of the certificate used in this example is `ldap.242c.cc`, the hostname of the docker has to be the same as the certificate.**
    
    By default, three files will be generated with similar names such as: `server.crt`, `server.key`, `ca-certificates.crt` though the filename extension `crt `may become `pem` in some situations but are usually the same. 
 
@@ -132,8 +132,6 @@ Here we give an example. You can edit the compose file as showing below.
 **Notice**: In the compose file, you can't use the 'Tab' key.
 
 ```yaml
-version: '3.7'
-
 services:
   openldap:
     image: bitnami/openldap:latest
@@ -166,15 +164,15 @@ services:
         window: 10s
 ```
 
-    To achieve the high availability using docker swarm, it is recommended to mount the `/examplepath` on every worker nodes using services such as NFS, gluster, S3. We have tested mounting the path using NFS. By design, the swarm should maintain one ldap server running on a node and automatically create new container if the existing worker becomes unavailable.
+    To achieve the high availability using docker swarm, it is recommended to mount the `/examplepath` on every worker nodes using services such as NFS, gluster, S3. We have tested mounting the path using NFS. By design, the swarm should maintain one ldap server running on a node and automatically create new container if the existing worker becomes unavailable. **Do remember to remove the mounted folder if anything related to LDAP such as is changed**
 
-**Deploy the stack using compose file**
+### Deploy the stack using compose file
 
 ```
 sudo docker stack deploy --compose-file openldap.yml openldap
 ```
 
-**Check if the service run successfully**
+### Check if the service run successfully
 
 ```
 sudo docker stack services openldap
@@ -199,7 +197,7 @@ ID             NAME                MODE         REPLICAS   IMAGE                
 we4qxs43l32s   openldap_openldap   replicated   1/1        bitnami/openldap:latest   *:389->1389/tcp, *:636->1636/tcp
 ```
 
-**Check which node the service is running on**
+### Check which node the service is running on
 
 ```
 sudo docker service ps openldap_openldap
@@ -292,7 +290,7 @@ You can check if you successfully performed the above steps by trying to connect
 1 Test the connection without 'TLS'.
 
 ```
-ldapsearch -x -H ldap://192.168.1.40 -b "dc=242c,dc=cc" -D "cn=admin,dc=242c,dc=cc" -w tomato2023
+ldapsearch -x -H ldap://192.168.1.40 -b "dc=242c,dc=cc" -D "cn=admin,dc=242c,dc=cc" -w adminpassword
 ```
 
 Then if you see these infomations, that menans the connection has been successfully established.
@@ -365,7 +363,7 @@ result: 0 Success
 2 Test the connection with 'TLS'. You just need to add the argument '-ZZ'.
 
 ```
-ldapsearch -x -H -ZZ ldap://192.168.1.40 -b "dc=242c,dc=cc" -D "cn=admin,dc=242c,dc=cc" -w tomato2023
+ldapsearch -x -H -ZZ ldap://192.168.1.40 -b "dc=242c,dc=cc" -D "cn=admin,dc=242c,dc=cc" -w adminpassword
 ```
 
 Similarly, if you see these information, that means the connection has successfully established with 'TLS'.
