@@ -132,6 +132,7 @@ Here we give an example. You can edit the compose file as showing below.
 **Notice**: In the compose file, you can't use the 'Tab' key.
 
 ```yaml
+
 services:
   openldap:
     image: bitnami/openldap:latest
