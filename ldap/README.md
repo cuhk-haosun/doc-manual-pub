@@ -8,7 +8,7 @@
 
 # Obtaining TLS certificates
 
-  TLS certificate is required to run OpenLDAP over TLS, There are several ways to obtain TLS certificates recommended as follows:
+    TLS certificate is required to run OpenLDAP over TLS, There are several ways to obtain TLS certificates recommended as follows:
 
 1. Automatic certificate issuer such as [ACME.SH](https://github.com/acmesh-official/acme.sh) (recommended)
 
@@ -285,115 +285,9 @@ Similarly, you can create a new user by clicking on the Group (sunlab) -> Create
 
  More options can be explored on the OpenLDAP by yourself.
 
-## Client installation and configuration on other server
+## Test 1 | Check the ldap server
 
-```
-sudo apt -y install libnss-ldapd libpam-ldapd ldap-utils
-```
-
-**As soon as this command starts its execution, you will be able to see an interactive prompt, in which you can perform the various LDAP configurations explained in the following steps:**
-
-1. Configure URI for LDAP Server. (The format is ldap://"hostname or IP":"port", here we use the ldap://192.168.1.40:389 as an example)
-   
-   ![configure1.png](pic/configure1.png)
-
-2. Set up Distinct Name for LDAP Search Base. (Here we use "dc=242c,dc=cc" as example)
-   
-   ![configure2.png](pic/configure2.png)
-
-3. This step will automatically generate and modify the "/etc/nsswitch.conf" file. Select the 'passwd', 'group', and 'shadow' and press 'ok'. 
-   
-   ![configure3.png](pic/configure3.png)
-
-4. Allow Automatic Creation of User's Home Directory
-   
-   ```
-   sudo nano /etc/pam.d/common-session
-   ```
-   
-   When this file opens with the nano editor, enter the following line of code at the end of this file.
-   
-   ```
-   # add to the end if need (create home directory automatically at initial login)
-   session required pam_mkhomedir.so skel=/etc/skel umask=077
-   ```
-
-5. Modify the NSSwitch configuration '/etc/nsswitch.conf' to use the ldap as a datasource if it does not configure automatically.
-   
-   Open the "/etc/nsswitch.conf" file, first.
-   
-   ```
-   sudo nano /etc/nsswitch.conf
-   ```
-   
-   Now change detail lines exact as below. Specifically, add the ```ldap``` to the end. (Here we give an example)
-   
-   ![nsswitch_onf.png](pic/nsswitch_onf.png)
-
-6. "/etc/ldap/ldap.conf" is the configuration file for all OpenLDAP clients. Open this file.
-   
-   ```
-   sudo nano /etc/ldap/ldap.conf
-   ```
-   
-   We need to specify two parameters: the **base DN** and the **URI** of our OpenLDAP server. Copy and paste the following text at the end of the file. Replace `your-domain` and `com` as appropriate. You can add multiple URIs later if the need arises.
-   
-   ```
-   BASE    dc=242c,dc=cc
-   URI    ldap://192.168.1.40
-   ```
-   
-   Then add the "TLS_REQCERT allow" to the end. 
-   
-   ```
-   TLS_REQCERT    allow
-   ```
-   
-   ![ldap_conf.png](pic/ldap_conf.png)
-
-7. Configure the '/etc/nslcd.conf' file. Open the '/etc/nslcd.conf' file first.  
-   
-   ```
-   sudo nano /etc/nslcd.conf
-   ```
-   
-   Similarly with the '/etc/ldap/ldap.conf' file, add or change the 'base' and 'uri' information. 
-   
-   ```
-   uri ldap://192.168.1.40:389
-   base dc=242c,dc=cc
-   ```
-   
-   And add the 'ssl start_tls' and 'tls_reqcert allow' to the end.
-   
-   ```
-   ssl start_tls
-   tls_reqcert allow
-   ```
-   
-   ![nslcd_conf.png](pic/nslcd_conf.png)
-
-8. Restart Name Service Cache Daemon (nscd && nslcd)
-   
-   ```
-   sudo systemctl restart nscd nslcd
-   ```
-
-9. Enable Name Service Cache Daemon (nscd && nslcd)
-   
-   ```
-   sudo systemctl enable nscd nslcd
-   ```
-
-10. Update PAM Configuration. This command will display a dialogue box on your screen from which you can select any desired profiles that you want to be enabled. It is recommended to go with the default profile. Then, to continue, press the Enter key.If need, you can add the option "Create home directory on login".
-    
-    ```
-    sudo pam-auth-update
-    ```
-    
-    ![PAM.png](pic/PAM.png)
-
-## Test
+You can check if you successfully performed the above steps by trying to connect to the ldap server by the following methods: 
 
 1 Test the connection without 'TLS'.
 
@@ -544,15 +438,137 @@ result: 0 Success
 **Note**: What's the different between LDAP over TLS (STARTTLS) and LDAP over SSL (LDAPS)? 
 Ref: https://kb.sos-berlin.com/pages/viewpage.action?pageId=18778435
 
-**LDAP over TLS (STARTTLS)**
-StartTLS in an extension to the LDAP protocol which uses the TLS protocol to encrypt communication. It works by establishing a normal - i.e. unsecured - connection with the LDAP server before a handshake negotiation between the server and the web services is carried out. Here, the server sends its certificate to prove its identity before the secure connection is established. If negotiation for a secure connection is unsuccessful then a standard LDAP connection may be opened. Whether or not this occurs depends on the LDAP server and its configuration. 
+**LDAP over TLS (STARTTLS)** StartTLS in an extension to the LDAP protocol which uses the TLS protocol to encrypt communication. It works by establishing a normal - i.e. unsecured - connection with the LDAP server before a handshake negotiation between the server and the web services is carried out. Here, the server sends its certificate to prove its identity before the secure connection is established. If negotiation for a secure connection is unsuccessful then a standard LDAP connection may be opened. Whether or not this occurs depends on the LDAP server and its configuration.
 
-**LDAP over SSL (LDAPS)**
-LDAPS is the non-standardized "LDAP over SSL" protocol that in contrast with StartTLS only allows communication over a secure port such as 636. It establishes the secure connection before there is any communication with the LDAP server. However, as LDAPS is not part of the LDAP standard, there is no guarantee that LDAPS client libraries actually verify the host name against the name provided with the security certificate.
+**LDAP over SSL (LDAPS)** LDAPS is the non-standardized "LDAP over SSL" protocol that in contrast with StartTLS only allows communication over a secure port such as 636. It establishes the secure connection before there is any communication with the LDAP server. However, as LDAPS is not part of the LDAP standard, there is no guarantee that LDAPS client libraries actually verify the host name against the name provided with the security certificate.
 
-## Remove client config file
+## Client installation and configuration on other server
 
-If you want to remove LDAP Client, you can use the following command:    
+```
+sudo apt -y install libnss-ldapd libpam-ldapd ldap-utils
+```
+
+**As soon as this command starts its execution, you will be able to see an interactive prompt, in which you can perform the various LDAP configurations explained in the following steps:**
+
+1. Configure URI for LDAP Server. (The format is ldap://"hostname or IP":"port", here we use the ldap://192.168.1.40:389 as an example)
+   
+   ![configure1.png](pic/configure1.png)
+
+2. Set up Distinct Name for LDAP Search Base. (Here we use "dc=242c,dc=cc" as example)
+   
+   ![configure2.png](pic/configure2.png)
+
+3. This step will automatically generate and modify the "/etc/nsswitch.conf" file. Select the 'passwd', 'group', and 'shadow' and press 'ok'. 
+   
+   ![configure3.png](pic/configure3.png)
+
+4. Allow Automatic Creation of User's Home Directory
+   
+   ```
+   sudo nano /etc/pam.d/common-session
+   ```
+   
+   When this file opens with the nano editor, enter the following line of code at the end of this file.
+   
+   ```
+   # add to the end if need (create home directory automatically at initial login)
+   session required pam_mkhomedir.so skel=/etc/skel umask=077
+   ```
+
+5. Modify the NSSwitch configuration '/etc/nsswitch.conf' to use the ldap as a datasource if it does not configure automatically.
+   
+   Open the "/etc/nsswitch.conf" file, first.
+   
+   ```
+   sudo nano /etc/nsswitch.conf
+   ```
+   
+   Now change detail lines exact as below. Specifically, add the ```ldap``` to the end. (Here we give an example)
+   
+   ![nsswitch_onf.png](pic/nsswitch_onf.png)
+
+6. "/etc/ldap/ldap.conf" is the configuration file for all OpenLDAP clients. Open this file.
+   
+   ```
+   sudo nano /etc/ldap/ldap.conf
+   ```
+   
+   We need to specify two parameters: the **base DN** and the **URI** of our OpenLDAP server. Copy and paste the following text at the end of the file. Replace `your-domain` and `com` as appropriate. You can add multiple URIs later if the need arises.
+   
+   ```
+   BASE    dc=242c,dc=cc
+   URI    ldap://192.168.1.40
+   ```
+   
+   Then add the "TLS_REQCERT allow" to the end. 
+   
+   ```
+   TLS_REQCERT    allow
+   ```
+   
+   ![ldap_conf.png](pic/ldap_conf.png)
+
+7. Configure the '/etc/nslcd.conf' file. Open the '/etc/nslcd.conf' file first.  
+   
+   ```
+   sudo nano /etc/nslcd.conf
+   ```
+   
+   Similarly with the '/etc/ldap/ldap.conf' file, add or change the 'base' and 'uri' information. 
+   
+   ```
+   uri ldap://192.168.1.40:389
+   base dc=242c,dc=cc
+   ```
+   
+   And add the 'ssl start_tls' and 'tls_reqcert allow' to the end.
+   
+   ```
+   ssl start_tls
+   tls_reqcert allow
+   ```
+   
+   ![nslcd_conf.png](pic/nslcd_conf.png)
+
+8. Restart Name Service Cache Daemon (nscd && nslcd)
+   
+   ```
+   sudo systemctl restart nscd nslcd
+   ```
+
+9. Enable Name Service Cache Daemon (nscd && nslcd)
+   
+   ```
+   sudo systemctl enable nscd nslcd
+   ```
+
+10. Update PAM Configuration. This command will display a dialogue box on your screen from which you can select any desired profiles that you want to be enabled. It is recommended to go with the default profile. Then, to continue, press the Enter key.If need, you can add the option "Create home directory on login".
+    
+    ```
+    sudo pam-auth-update
+    ```
+    
+    ![PAM.png](pic/PAM.png) 
+
+## Test 2 | Check the ldap client
+
+After you successfully perform the above steps, you can use the following command to try to log in to the user you created to confirm whether the ldap client is successfully installed and configured (if username is 'zx'):  
+
+```
+su zx
+```
+
+## Reconfigure ldap client
+
+If you need to reconfigure the ldap client file, you can use the following command:
+
+```
+sudo dpkg-reconfigure nscd nslcd
+```
+
+## Remove ldap client config file
+
+If you want to remove LDAP Client, you can use the following commands:    
 
 ```
 sudo apt-get purge libnss-ldapd libpam-ldapd ldap-utils
