@@ -8,7 +8,7 @@
 
 # Obtaining TLS certificates
 
-  TLS certificate is required to run OpenLDAP over TLS, There are several ways to obtain TLS certificates recommended as follows:
+    TLS certificate is required to run OpenLDAP over TLS, There are several ways to obtain TLS certificates recommended as follows:
 
 1. Automatic certificate issuer such as [ACME.SH](https://github.com/acmesh-official/acme.sh) (recommended)
 
@@ -16,7 +16,7 @@
 
 3. Self-signing certificate
    
-   **The common name of the certificate used in this example is `ldap.242c.cc`, the hostname of the docker has to be the same as the certificate. **
+   **The common name of the certificate used in this example is `ldap.242c.cc`, the hostname of the docker has to be the same as the certificate.**
    
    By default, three files will be generated with similar names such as: `server.crt`, `server.key`, `ca-certificates.crt` though the filename extension `crt `may become `pem` in some situations but are usually the same. 
 
@@ -133,7 +133,6 @@ Here we give an example. You can edit the compose file as showing below.
 
 ```yaml
 
-
 services:
   openldap:
     image: bitnami/openldap:latest
@@ -166,15 +165,15 @@ services:
         window: 10s
 ```
 
-    To achieve the high availability using docker swarm, it is recommended to mount the `/examplepath` on every worker nodes using services such as NFS, gluster, S3. We have tested mounting the path using NFS. By design, the swarm should maintain one ldap server running on a node and automatically create new container if the existing worker becomes unavailable.
+    To achieve the high availability using docker swarm, it is recommended to mount the `/examplepath` on every worker nodes using services such as NFS, gluster, S3. We have tested mounting the path using NFS. By design, the swarm should maintain one ldap server running on a node and automatically create new container if the existing worker becomes unavailable. **Do remember to remove the mounted folder if anything related to LDAP such as is changed**
 
-**Deploy the stack using compose file**
+### Deploy the stack using compose file
 
 ```
 sudo docker stack deploy --compose-file openldap.yml openldap
 ```
 
-**Check if the service run successfully**
+### Check if the service run successfully
 
 ```
 sudo docker stack services openldap
@@ -199,7 +198,7 @@ ID             NAME                MODE         REPLICAS   IMAGE                
 we4qxs43l32s   openldap_openldap   replicated   1/1        bitnami/openldap:latest   *:389->1389/tcp, *:636->1636/tcp
 ```
 
-**Check which node the service is running on**
+### Check which node the service is running on
 
 ```
 sudo docker service ps openldap_openldap
@@ -284,6 +283,163 @@ Similarly, you can create a new user by clicking on the Group (sunlab) -> Create
 ![phpldapadmin_adduser2.png](pic/phpldapadmin_adduser2.png)
 
  More options can be explored on the OpenLDAP by yourself.
+
+## Test 1 | Check the ldap server
+
+You can check if you successfully performed the above steps by trying to connect to the ldap server by the following methods: 
+
+1 Test the connection without 'TLS'.
+
+```
+ldapsearch -x -H ldap://192.168.1.40 -b "dc=242c,dc=cc" -D "cn=admin,dc=242c,dc=cc" -w adminpassword
+```
+
+Then if you see these infomations, that menans the connection has been successfully established.
+
+```
+# extended LDIF
+#
+# LDAPv3
+# base <dc=242c,dc=cc> with scope subtree
+# filter: (objectclass=*)
+# requesting: ALL
+#
+
+# 242c.cc
+dn: dc=242c,dc=cc
+objectClass: dcObject
+objectClass: organization
+dc: 242c
+o: example
+
+# people, 242c.cc
+dn: ou=people,dc=242c,dc=cc
+objectClass: organizationalUnit
+ou: users
+ou: people
+
+# user01, people, 242c.cc
+dn: cn=user01,ou=people,dc=242c,dc=cc
+cn: User1
+cn: user01
+sn: Bar1
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+userPassword:: Yml0bmFtaTE=
+uid: user01
+uidNumber: 1000
+gidNumber: 1000
+homeDirectory: /home/user01
+
+# user02, people, 242c.cc
+dn: cn=user02,ou=people,dc=242c,dc=cc
+cn: User2
+cn: user02
+sn: Bar2
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+userPassword:: Yml0bmFtaTI=
+uid: user02
+uidNumber: 1001
+gidNumber: 1001
+homeDirectory: /home/user02
+
+# readers, people, 242c.cc
+dn: cn=readers,ou=people,dc=242c,dc=cc
+cn: readers
+objectClass: groupOfNames
+member: cn=user01,ou=people,dc=242c,dc=cc
+member: cn=user02,ou=people,dc=242c,dc=cc
+
+# search result
+search: 2
+result: 0 Success
+
+# numResponses: 6
+# numEntries: 5
+```
+
+2 Test the connection with 'TLS'. You just need to add the argument '-ZZ'.
+
+```
+ldapsearch -x -H -ZZ ldap://192.168.1.40 -b "dc=242c,dc=cc" -D "cn=admin,dc=242c,dc=cc" -w adminpassword
+```
+
+Similarly, if you see these information, that means the connection has successfully established with 'TLS'.
+
+```
+# extended LDIF
+#
+# LDAPv3
+# base <dc=242c,dc=cc> with scope subtree
+# filter: (objectclass=*)
+# requesting: ALL
+#
+
+# 242c.cc
+dn: dc=242c,dc=cc
+objectClass: dcObject
+objectClass: organization
+dc: 242c
+o: example
+
+# people, 242c.cc
+dn: ou=people,dc=242c,dc=cc
+objectClass: organizationalUnit
+ou: users
+ou: people
+
+# user01, people, 242c.cc
+dn: cn=user01,ou=people,dc=242c,dc=cc
+cn: User1
+cn: user01
+sn: Bar1
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+userPassword:: Yml0bmFtaTE=
+uid: user01
+uidNumber: 1000
+gidNumber: 1000
+homeDirectory: /home/user01
+
+# user02, people, 242c.cc
+dn: cn=user02,ou=people,dc=242c,dc=cc
+cn: User2
+cn: user02
+sn: Bar2
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+userPassword:: Yml0bmFtaTI=
+uid: user02
+uidNumber: 1001
+gidNumber: 1001
+homeDirectory: /home/user02
+
+# readers, people, 242c.cc
+dn: cn=readers,ou=people,dc=242c,dc=cc
+cn: readers
+objectClass: groupOfNames
+member: cn=user01,ou=people,dc=242c,dc=cc
+member: cn=user02,ou=people,dc=242c,dc=cc
+
+# search result
+search: 3
+result: 0 Success
+
+# numResponses: 6
+# numEntries: 5
+```
+
+**Note**: What's the different between LDAP over TLS (STARTTLS) and LDAP over SSL (LDAPS)? 
+Ref: https://kb.sos-berlin.com/pages/viewpage.action?pageId=18778435
+
+**LDAP over TLS (STARTTLS)** StartTLS in an extension to the LDAP protocol which uses the TLS protocol to encrypt communication. It works by establishing a normal - i.e. unsecured - connection with the LDAP server before a handshake negotiation between the server and the web services is carried out. Here, the server sends its certificate to prove its identity before the secure connection is established. If negotiation for a secure connection is unsuccessful then a standard LDAP connection may be opened. Whether or not this occurs depends on the LDAP server and its configuration.
+
+**LDAP over SSL (LDAPS)** LDAPS is the non-standardized "LDAP over SSL" protocol that in contrast with StartTLS only allows communication over a secure port such as 636. It establishes the secure connection before there is any communication with the LDAP server. However, as LDAPS is not part of the LDAP standard, there is no guarantee that LDAPS client libraries actually verify the host name against the name provided with the security certificate.
 
 ## Client installation and configuration on other server
 
@@ -391,168 +547,27 @@ sudo apt -y install libnss-ldapd libpam-ldapd ldap-utils
     sudo pam-auth-update
     ```
     
-    ![PAM.png](pic/PAM.png)
+    ![PAM.png](pic/PAM.png) 
 
-## Test
+## Test 2 | Check the ldap client
 
-1 Test the connection without 'TLS'.
-
-```
-ldapsearch -x -H ldap://192.168.1.40 -b "dc=242c,dc=cc" -D "cn=admin,dc=242c,dc=cc" -w tomato2023
-```
-
-Then if you see these infomations, that menans the connection has been successfully established.
+After you successfully perform the above steps, you can use the following command to try to log in to the user you created to confirm whether the ldap client is successfully installed and configured (if username is 'zx'):  
 
 ```
-# extended LDIF
-#
-# LDAPv3
-# base <dc=242c,dc=cc> with scope subtree
-# filter: (objectclass=*)
-# requesting: ALL
-#
-
-# 242c.cc
-dn: dc=242c,dc=cc
-objectClass: dcObject
-objectClass: organization
-dc: 242c
-o: example
-
-# people, 242c.cc
-dn: ou=people,dc=242c,dc=cc
-objectClass: organizationalUnit
-ou: users
-ou: people
-
-# user01, people, 242c.cc
-dn: cn=user01,ou=people,dc=242c,dc=cc
-cn: User1
-cn: user01
-sn: Bar1
-objectClass: inetOrgPerson
-objectClass: posixAccount
-objectClass: shadowAccount
-userPassword:: Yml0bmFtaTE=
-uid: user01
-uidNumber: 1000
-gidNumber: 1000
-homeDirectory: /home/user01
-
-# user02, people, 242c.cc
-dn: cn=user02,ou=people,dc=242c,dc=cc
-cn: User2
-cn: user02
-sn: Bar2
-objectClass: inetOrgPerson
-objectClass: posixAccount
-objectClass: shadowAccount
-userPassword:: Yml0bmFtaTI=
-uid: user02
-uidNumber: 1001
-gidNumber: 1001
-homeDirectory: /home/user02
-
-# readers, people, 242c.cc
-dn: cn=readers,ou=people,dc=242c,dc=cc
-cn: readers
-objectClass: groupOfNames
-member: cn=user01,ou=people,dc=242c,dc=cc
-member: cn=user02,ou=people,dc=242c,dc=cc
-
-# search result
-search: 2
-result: 0 Success
-
-# numResponses: 6
-# numEntries: 5
+su zx
 ```
 
-2 Test the connection with 'TLS'. You just need to add the argument '-ZZ'.
+## Reconfigure ldap client
+
+If you need to reconfigure the ldap client file, you can use the following command:
 
 ```
-ldapsearch -x -H -ZZ ldap://192.168.1.40 -b "dc=242c,dc=cc" -D "cn=admin,dc=242c,dc=cc" -w tomato2023
+sudo dpkg-reconfigure nscd nslcd
 ```
 
-Similarly, if you see these information, that means the connection has successfully established with 'TLS'.
+## Remove ldap client config file
 
-```
-# extended LDIF
-#
-# LDAPv3
-# base <dc=242c,dc=cc> with scope subtree
-# filter: (objectclass=*)
-# requesting: ALL
-#
-
-# 242c.cc
-dn: dc=242c,dc=cc
-objectClass: dcObject
-objectClass: organization
-dc: 242c
-o: example
-
-# people, 242c.cc
-dn: ou=people,dc=242c,dc=cc
-objectClass: organizationalUnit
-ou: users
-ou: people
-
-# user01, people, 242c.cc
-dn: cn=user01,ou=people,dc=242c,dc=cc
-cn: User1
-cn: user01
-sn: Bar1
-objectClass: inetOrgPerson
-objectClass: posixAccount
-objectClass: shadowAccount
-userPassword:: Yml0bmFtaTE=
-uid: user01
-uidNumber: 1000
-gidNumber: 1000
-homeDirectory: /home/user01
-
-# user02, people, 242c.cc
-dn: cn=user02,ou=people,dc=242c,dc=cc
-cn: User2
-cn: user02
-sn: Bar2
-objectClass: inetOrgPerson
-objectClass: posixAccount
-objectClass: shadowAccount
-userPassword:: Yml0bmFtaTI=
-uid: user02
-uidNumber: 1001
-gidNumber: 1001
-homeDirectory: /home/user02
-
-# readers, people, 242c.cc
-dn: cn=readers,ou=people,dc=242c,dc=cc
-cn: readers
-objectClass: groupOfNames
-member: cn=user01,ou=people,dc=242c,dc=cc
-member: cn=user02,ou=people,dc=242c,dc=cc
-
-# search result
-search: 3
-result: 0 Success
-
-# numResponses: 6
-# numEntries: 5
-```
-
-**Note**: What's the different between LDAP over TLS (STARTTLS) and LDAP over SSL (LDAPS)? 
-Ref: https://kb.sos-berlin.com/pages/viewpage.action?pageId=18778435
-
-**LDAP over TLS (STARTTLS)**
-StartTLS in an extension to the LDAP protocol which uses the TLS protocol to encrypt communication. It works by establishing a normal - i.e. unsecured - connection with the LDAP server before a handshake negotiation between the server and the web services is carried out. Here, the server sends its certificate to prove its identity before the secure connection is established. If negotiation for a secure connection is unsuccessful then a standard LDAP connection may be opened. Whether or not this occurs depends on the LDAP server and its configuration. 
-
-**LDAP over SSL (LDAPS)**
-LDAPS is the non-standardized "LDAP over SSL" protocol that in contrast with StartTLS only allows communication over a secure port such as 636. It establishes the secure connection before there is any communication with the LDAP server. However, as LDAPS is not part of the LDAP standard, there is no guarantee that LDAPS client libraries actually verify the host name against the name provided with the security certificate.
-
-## Remove client config file
-
-If you want to remove LDAP Client, you can use the following command:    
+If you want to remove LDAP Client, you can use the following commands:    
 
 ```
 sudo apt-get purge libnss-ldapd libpam-ldapd ldap-utils
