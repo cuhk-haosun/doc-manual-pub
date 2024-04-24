@@ -31,7 +31,7 @@ Add the bin directory to your PATH environment variable
 
 ```
 nano ~/.bashrc
-export PATH=$PATH: / share/home/grp-sunhao/liyixiao/sratoolkit.3.1.0-centos_linux64/bin
+export PATH=$PATH:/share/home/grp-sunhao/liyixiao/sratoolkit.3.1.0-centos_linux64/bin
 source ~/.bashrc
 ```
 
