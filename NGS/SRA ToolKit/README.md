@@ -8,7 +8,7 @@ The SRA Toolkit is a tool for ncbi to download .SRA files and convert .fastQ fil
 
 Open NCBI, click `Download` on the icon.
 
-![sample image](/pic/1.png)
+![sample image](/NGS/SRA ToolKit/pic/1.png)
 
 Then click `Download Tools` on the new page
 
