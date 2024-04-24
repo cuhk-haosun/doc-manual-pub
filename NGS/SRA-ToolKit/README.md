@@ -12,7 +12,11 @@ Open NCBI, click `Download` on the icon.
 
 Then click `Download Tools` on the new page
 
+![sample image](/NGS/SRA-ToolKit/pic/2.png)
+
 And you will see the download of `SRA Toolkit`. Click in and you will go to the download interface of the corresponding system
+
+![sample image](/NGS/SRA-ToolKit/pic/3.png)
 
 ### Download by Linux code
 
@@ -37,4 +41,4 @@ GSE71378's raw file id is SRR061633, use commands will split two original paired
 ```
 fastq-dump --split-files SRR061633
 ```
-
+![sample image](/NGS/SRA-ToolKit/pic/4.png)
