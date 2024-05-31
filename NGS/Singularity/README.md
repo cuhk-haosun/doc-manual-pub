@@ -3,24 +3,24 @@
 ___
 
 - [Singularity Guidance](#singularity-guidance)
-  - [Introduction](#introduction)
-    - [:mortar\_board: What is Singularity](#mortar_board-what-is-singularity)
-    - [:postbox: Why use containers](#postbox-why-use-containers)
-    - [:sparkles: Why use Singularity](#sparkles-why-use-singularity)
-    - [:books: User manual](#books-user-manual)
-  - [Quick Start](#quick-start)
-    - [:cd: Build an image from Dockerfile](#cd-build-an-image-from-dockerfile)
-    - [:whale: Push an image to Docker Hub](#whale-push-an-image-to-docker-hub)
-    - [:gift: Create a container from an image](#gift-create-a-container-from-an-image)
-    - [:sparkler: Execute commands in a container](#sparkler-execute-commands-in-a-container)
+  - [1 Introduction](#1-introduction)
+    - [:mortar\_board: 1.1 What is Singularity](#mortar_board-11-what-is-singularity)
+    - [:postbox: 1.2 Why use containers](#postbox-12-why-use-containers)
+    - [:sparkles: 1.3 Why use Singularity](#sparkles-13-why-use-singularity)
+    - [:books: 1.4 User manual](#books-14-user-manual)
+  - [2 Quick Start](#2-quick-start)
+    - [:cd: 2.1 Build an image from Dockerfile](#cd-21-build-an-image-from-dockerfile)
+    - [:whale: 2.2 Push an image to Docker Hub](#whale-22-push-an-image-to-docker-hub)
+    - [:gift: 2.3 Create a container from an image](#gift-23-create-a-container-from-an-image)
+    - [:sparkler: 2.4 Execute commands in a container](#sparkler-24-execute-commands-in-a-container)
       - [Method 1: `exec` command](#method-1-exec-command)
       - [Method 2: `shell` command](#method-2-shell-command)
 
 ___
 
-## Introduction
+## 1 Introduction
 
-### :mortar_board: What is Singularity
+### :mortar_board: 1.1 What is Singularity
 
 Singularity is a *container* platform. It allows you to create and run containers that package up pieces of software in a way that is portable and reproducible.
 
@@ -34,29 +34,29 @@ Singularity is a *container* platform. It allows you to create and run container
 
 <br>
 
-> <center>An image is <i>still</i>, while a container is <i>alive</i>.</center>
+> An image is *still*, while a container is *alive*.
 
-<br>
-
-### :postbox: Why use containers
+### :postbox: 1.2 Why use containers
 
 Containers provide a reliable way to maintain consistent application performance across various environments. They encapsulate the application's source code, environment settings, and third-party dependencies into a single image. This image can be used to create containers that run uniformly, regardless of the underlying environment. This approach mitigates issues that arise from discrepancies in environments, configurations, and dependency versions, facilitating seamless cross-platform and cross-server operations and streamlining the transition from development to deployment.
 
-### :sparkles: Why use Singularity
+### :sparkles: 1.3 Why use Singularity
 
 Singularity is an open source container platform designed to be simple, fast, and secure. **Unlike Docker which requires root privileges to run containers**, Singularity is designed for ease-of-use on shared multi-user systems and in high performance computing (HPC) environments. **Singularity is compatible with all Docker images** and it can be used with GPUs and MPI applications.
 
-### :books: User manual
+### :books: 1.4 User manual
 
 The latest version of Singularity User Guide is always available through the url: https://docs.sylabs.io/guides/latest/user-guide/
 
+<br>
+
 ___
 
-## Quick Start
+## 2 Quick Start
 
 > Note: Before we start, please make sure that you had installed `docker` and registered an account of Docker Hub. As for how to write a Dockerfile, please check the examples in [another github repository](https://github.com/cuhk-haosun/workshop-docker/tree/main).
 
-### :cd: Build an image from Dockerfile
+### :cd: 2.1 Build an image from Dockerfile
 
 ```bash
 docker build [OPTIONS] PATH
@@ -101,7 +101,7 @@ python                  3.5                 045767ddf24a        3 weeks ago     
 
 > Note: It is accessible for us to modify the name and tag of an image by the command `docker tag <IMAGE ID> <new-name>:<new-tag>`.
 
-### :whale: Push an image to Docker Hub
+### :whale: 2.2 Push an image to Docker Hub
 
 It is very convenient to push your image to Docker Hub:
 
@@ -113,7 +113,7 @@ When it is done, you can check your image at Docker Hub website.
 
 ![image at Docker Hub](figure/image.png)
 
-### :gift: Create a container from an image
+### :gift: 2.3 Create a container from an image
 
 To pull an image from Docker Hub and build it into a **sandbox (container in a directory)** in NGS cluster, use the `build --sandbox` command and option:
 
@@ -125,7 +125,7 @@ This command creates a container in a directory with an isolated Linux filesyste
 
 > :exclamation: Note: Don't forget to add the `--sandbox` option. Otherwise, Singularity may only pull and build an SIF image, which causes the computing nodes at NGS cluster failed to run it owing to their lack of certain software for converting SIF images into containers.
 
-### :sparkler: Execute commands in a container
+### :sparkler: 2.4 Execute commands in a container
 
 #### Method 1: `exec` command
 
