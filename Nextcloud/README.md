@@ -34,6 +34,8 @@ See: https://docs.nextcloud.com/server/latest/user_manual/en/files/access_webdav
 - Click on your user icon (top-right corner) and go to Files Settings.
 - Scroll down to the WebDAV section, where you’ll find your WebDAV URL.
 
+![WebDAV_URL](https://github.com/Nayu-W/doc-manual-pub/blob/main/Nextcloud/pic/WebDAV_URL.png)
+
 ### Creating WebDAV mounts
 
 Take rclone as the example, if you want to create WedDAV mounts using other filesystem driver, like davfs2, you can check the official documentation： https://docs.nextcloud.com/server/latest/user_manual/en/files/access_webdav.html#creating-webdav-mounts-on-the-linux-command-line
