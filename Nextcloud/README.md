@@ -14,7 +14,9 @@ Just point it to your Nextcloud server URL (e.g. https://slcloud.yutg.net) and e
 
 ## Desktop client
 
-<a href="https://nextcloud.com/install/#install-clients">Install the Desktop Synchronization Client</a>. Point to the URL and enter your username and password, just as you would when logging in with web browser.
+<a href="https://nextcloud.com/install/#install-clients">Install the Desktop Synchronization Client</a>
+
+Point to the URL and enter your username and password, just as you would when logging in with web browser.
 
 # Accessing Nextcloud files using WebDAV
 
