@@ -14,7 +14,7 @@ Just point it to your Nextcloud server URL (e.g. https://slcloud.yutg.net) and e
 
 ## Desktop client
 
-Install the Desktop Synchronization Client from https://nextcloud.com/install/#install-clients. Point to the URL and enter your username and password, just as you would when logging in with web browser.
+<a href="https://nextcloud.com/install/#install-clients">Install the Desktop Synchronization Client</a>. Point to the URL and enter your username and password, just as you would when logging in with web browser.
 
 # Accessing Nextcloud files using WebDAV
 
@@ -40,7 +40,7 @@ See <a href="https://docs.nextcloud.com/server/latest/user_manual/en/files/acces
 
 ### Creating WebDAV mounts
 
-Take rclone as the example, if you want to create WedDAV mounts using other filesystem driver, like davfs2, you can check the official documentation： https://docs.nextcloud.com/server/latest/user_manual/en/files/access_webdav.html#creating-webdav-mounts-on-the-linux-command-line
+Take rclone as the example, if you want to create WedDAV mounts using other filesystem driver, like <a href="https://docs.nextcloud.com/server/latest/user_manual/en/files/access_webdav.html#creating-webdav-mounts-on-the-linux-command-line">davfs2</a>, you can check the official documentation. 
 
 **Configure rclone for WebDAV (Nextcloud)**
 
