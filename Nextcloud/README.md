@@ -18,6 +18,14 @@ Install the Desktop Synchronization Client from https://nextcloud.com/install/#i
 
 Nextcloud fully supports the WebDAV protocol, and you can connect and synchronize with Nextcloud Files over WebDAV. 
 
+**Locating Your WebDAV URL in Nextcloud**
+
+- Log in to your Nextcloud web interface.
+- Click on your user icon (top-right corner) and go to Files Settings.
+- Scroll down to the WebDAV section, where you’ll find your WebDAV URL.
+
+![WebDAV_URL](https://github.com/Nayu-W/doc-manual-pub/blob/main/Nextcloud/pic/WebDAV_URL.png)
+
 ## Accessing files using macOS
 
 See: https://docs.nextcloud.com/server/latest/user_manual/en/files/access_webdav.html#accessing-files-using-macos
@@ -27,14 +35,6 @@ See: https://docs.nextcloud.com/server/latest/user_manual/en/files/access_webdav
 See: https://docs.nextcloud.com/server/latest/user_manual/en/files/access_webdav.html#accessing-files-using-microsoft-windows
 
 ## Accessing files using Linux
-
-### Locating Your WebDAV URL in Nextcloud
-
-- Log in to your Nextcloud web interface.
-- Click on your user icon (top-right corner) and go to Files Settings.
-- Scroll down to the WebDAV section, where you’ll find your WebDAV URL.
-
-![WebDAV_URL](https://github.com/Nayu-W/doc-manual-pub/blob/main/Nextcloud/pic/WebDAV_URL.png)
 
 ### Creating WebDAV mounts
 
