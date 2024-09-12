@@ -28,7 +28,7 @@ Nextcloud fully supports the WebDAV protocol, and you can connect and synchroniz
 - Click on your user icon (top-right corner) and go to Files Settings.
 - Scroll down to the WebDAV section, where you’ll find your WebDAV URL.
 
-![WebDAV_URL](https://github.com/Nayu-W/doc-manual-pub/blob/main/Nextcloud/pic/WebDAV_URL.png)
+![WebDAV_URL](./pic/WebDAV_URL.png)
 
 ## Accessing files using macOS
 
@@ -60,7 +60,7 @@ rclone config
 - Input your Nextcloud username and password.
 - You can leave the bearer_token blank if you’re not using it.
 
-![rclone_config](https://github.com/Nayu-W/doc-manual-pub/blob/main/Nextcloud/pic/rclone_config.png)
+![rclone_config](./pic/rclone_config.png)
 
 **Test your connection**
 
