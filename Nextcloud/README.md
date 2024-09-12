@@ -2,8 +2,6 @@
 
 Nextcloud is open source file sync and share software providing a safe, secure, and compliant file synchronization and sharing solution on servers that you control. You can share one or more files and folders on your computer, and synchronize them with your Nextcloud server. Place files in your local shared directories, and those files are immediately synchronized to the server and to other devices using the Nextcloud Desktop Sync Client, Android app, or iOS app.
 
-[Nextcloud user manual](https://docs.nextcloud.com/server/latest/user_manual/en/index.html){rel="nofollow noreferrer noopener"}
-
 <a href="https://docs.nextcloud.com/server/latest/user_manual/en/index.html" target="_blank">Nextcloud user manual</a>
 
 # The Nextcloud Web interface
@@ -32,11 +30,11 @@ Nextcloud fully supports the WebDAV protocol, and you can connect and synchroniz
 
 ## Accessing files using macOS
 
-See: https://docs.nextcloud.com/server/latest/user_manual/en/files/access_webdav.html#accessing-files-using-macos
+See <a href="https://docs.nextcloud.com/server/latest/user_manual/en/files/access_webdav.html#accessing-files-using-macos">Accessing files using macOS</a>
 
 ## Accessing files using Microsoft Windows
 
-See: https://docs.nextcloud.com/server/latest/user_manual/en/files/access_webdav.html#accessing-files-using-microsoft-windows
+See <a href="https://docs.nextcloud.com/server/latest/user_manual/en/files/access_webdav.html#accessing-files-using-microsoft-windows">Accessing files using Microsoft Windows</a>
 
 ## Accessing files using Linux
 
