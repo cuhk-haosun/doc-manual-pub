@@ -56,6 +56,8 @@ rclone config
 - Input your Nextcloud username and password.
 - You can leave the bearer_token blank if you’re not using it.
 
+![rclone_config](https://github.com/Nayu-W/doc-manual-pub/blob/main/Nextcloud/pic/rclone_config.png)
+
 **Test your connection**
 
 To list the files in your Nextcloud WebDAV storage, run:
