@@ -100,4 +100,5 @@ rclone sync nextcloud:/remote/path /local/path
 
 **Contributor**
 
+- Zhao, Xing
 - WANG, Shang
