@@ -44,7 +44,7 @@ See <a href="https://docs.nextcloud.com/server/latest/user_manual/en/files/acces
 
 Take rclone as the example, if you want to create WedDAV mounts using other filesystem driver, like <a href="https://docs.nextcloud.com/server/latest/user_manual/en/files/access_webdav.html#creating-webdav-mounts-on-the-linux-command-line">davfs2</a>, you can check the official documentation. 
 
-**Configure rclone for WebDAV (Nextcloud)**
+**Configure rclone for WebDAV**
 
 ```
 rclone config
@@ -56,7 +56,7 @@ rclone config
 - Name it something like nextcloud.
 - Choose the **WebDAV** from the list of storage types.
 - Provide the WebDAV URL obtained from Nextcloud.
-- For vendor, select nextcloud
+- For vendor, select **Nextcloud**.
 - Input your Nextcloud username and password.
 - You can leave the bearer_token blank if you’re not using it.
 
@@ -94,6 +94,7 @@ rclone sync /local/path nextcloud:/remote/path
 ```
 rclone sync nextcloud:/remote/path /local/path
 ```
+
 
 
 
