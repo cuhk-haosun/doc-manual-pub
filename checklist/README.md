@@ -11,7 +11,7 @@
 
 ## Generate a SSH Key
 - Pls refer to https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent to generate a new ssh key
-- Add the ssh public key to your account
+- Add the ssh public key to your account and https://github.com/cuhk-haosun/doc-lab-record/blob/main/misc/member.list.md
 
 ***
 
