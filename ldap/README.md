@@ -47,7 +47,7 @@ sudo docker run --detach --name openldap \
   -p 389:1389 \
   -p 636:1636 \
   --restart always \
-  --volume: /zx:/bitnami/openldap
+  --volume /zx:/bitnami/openldap \
   --env LDAP_ROOT="dc=242c,dc=cc" \
   --env LDAP_ADMIN_USERNAME=admin \
   --env LDAP_ADMIN_PASSWORD=adminpassword \
